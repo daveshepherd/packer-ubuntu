@@ -1,0 +1,12 @@
+---
+- name: Replace SSHD config
+  copy:
+    src: sshd_config 
+    dest: /etc/ssh/sshd_config 
+    owner: root 
+    group: root 
+    mode: 0644
+
+- service: 
+    name=sshd 
+    state=reloaded

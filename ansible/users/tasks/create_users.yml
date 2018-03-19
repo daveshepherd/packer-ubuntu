@@ -1,0 +1,21 @@
+---
+- name: Add users
+  user:
+    name: "{{ item.key }}"
+    state: "{{ item.value.state }}"
+    uid: "{{item.value.uid }}"
+    shell: "{{ item.value.shell }}"
+    password: "{{item.value.password }}"
+    groups: "sudo"
+    update_password: "on_create"
+  with_dict:
+    "{{users}}"
+  no_log: true
+    
+- name: Add Keys
+  authorized_key:
+    user: "{{ item.key }}"
+    key: "{{ item.value.sshkey }}"
+  with_dict:
+    "{{users}}"
+  no_log: true

@@ -1,0 +1,108 @@
+{
+  "variables": {
+    "ireland_vpc_id": "",
+    "ireland_subnet_id": "",
+    "london_vpc_id": "",
+    "london_subnet_id": ""
+  },
+  "builders": [
+    {
+      "name": "ubuntu-16.04-eu-west-1",
+      "type": "amazon-ebs",
+      "region": "eu-west-1",
+      "vpc_id": "{{user `ireland_vpc_id`}}",
+      "subnet_id": "{{user `ireland_subnet_id`}}",
+      "associate_public_ip_address": true,
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "ubuntu-16.04-{{timestamp}}"
+    },
+    {
+      "name": "ubuntu-16.04-eu-west-2",
+      "type": "amazon-ebs",
+      "region": "eu-west-2",
+      "vpc_id": "{{user `london_vpc_id`}}",
+      "subnet_id": "{{user `london_subnet_id`}}",
+      "associate_public_ip_address": true,
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "ubuntu-16.04-{{timestamp}}"
+    },
+    {
+      "name": "ubuntu-18.04-eu-west-1",
+      "type": "amazon-ebs",
+      "region": "eu-west-1",
+      "vpc_id": "{{user `ireland_vpc_id`}}",
+      "subnet_id": "{{user `ireland_subnet_id`}}",
+      "associate_public_ip_address": true,
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images-testing/hvm-ssd/ubuntu-bionic-daily-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "ubuntu-18.04-{{timestamp}}"
+    },
+    {
+      "name": "ubuntu-18.04-eu-west-2",
+      "type": "amazon-ebs",
+      "region": "eu-west-2",
+      "vpc_id": "{{user `london_vpc_id`}}",
+      "subnet_id": "{{user `london_subnet_id`}}",
+      "associate_public_ip_address": true,
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images-testing/hvm-ssd/ubuntu-bionic-daily-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "ubuntu-18.04-{{timestamp}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "extra_arguments": [
+        "--vault-password-file=.vault_pass.txt"
+      ],
+      "playbook_file": "ansible/master.yml"
+    }
+  ]
+}
+

@@ -1,0 +1,28 @@
+- hosts: all
+  become: true
+  gather_facts: false
+  pre_tasks:
+    - name: Install python for Ansible
+      become: true
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      changed_when: false
+    - setup: # aka gather_facts
+
+  roles:
+    - users
+  vars_files:
+   - vars/users.yml
+
+  tasks:
+  - name: Refresh apt cache
+    apt:
+      update_cache: yes
+
+  - name: Update all packages
+    apt:
+      upgrade: dist
+
+  - name: enable ipv6
+    shell: >
+      echo "iface eth0 inet6 dhcp" > /etc/network/interfaces.d/60-default-with-ipv6.cfg
+    when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
