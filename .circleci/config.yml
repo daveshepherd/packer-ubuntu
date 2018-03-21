@@ -2,7 +2,7 @@ version: 2
 jobs:
   validate:
     docker:
-      - image: hashicorp/packer:1.1.3
+      - image: gaahrdner/packer-ansible-resource
     working_directory: ~/packer
     steps:
       - checkout
@@ -11,7 +11,7 @@ jobs:
           command: packer validate ./ubuntu.json
   build:
     docker:
-      - image: hashicorp/packer:1.1.3
+      - image: gaahrdner/packer-ansible-resource
     working_directory: ~/packer
     steps:
       - checkout
