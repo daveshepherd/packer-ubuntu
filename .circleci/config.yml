@@ -2,7 +2,7 @@ version: 2
 jobs:
   validate:
     docker:
-      - image: gaahrdner/packer-ansible-resource
+      - image: daveshepherd/packer-ansible
     working_directory: ~/packer
     steps:
       - checkout
@@ -11,7 +11,7 @@ jobs:
           command: packer validate ./ubuntu.json
   build:
     docker:
-      - image: gaahrdner/packer-ansible-resource
+      - image: daveshepherd/packer-ansible
     working_directory: ~/packer
     steps:
       - checkout
