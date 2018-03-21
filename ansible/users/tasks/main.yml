@@ -1,4 +1,4 @@
 ---
-- include: create_users.yml
-- include: motd.yml
-- include: sshd_config.yml
+- import_tasks: create_users.yml
+- import_tasks: motd.yml
+- import_tasks: sshd_config.yml
