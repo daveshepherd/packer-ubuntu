@@ -1,0 +1,48 @@
+version: 2
+jobs:
+  validate:
+    docker:
+      - image: hashicorp/packer:1.1.3
+    working_directory: ~/packer
+    steps:
+      - checkout
+      - run:
+          name: Validate definition
+          command: packer validate ./ubuntu.json
+  build:
+    docker:
+      - image: hashicorp/packer:1.1.3
+    working_directory: ~/packer
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/packer
+      - run:
+          name: Build ubuntu
+          command: ./build.sh
+          no_output_timeout: 30m
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - validate
+      - build:
+          requires:
+            - validate
+          filters:
+            branches:
+              only:
+                - master
+  monthly:
+    triggers:
+      - schedule:
+          cron: "13 2 18 * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - validate
+      - build:
+          requires:
+            - validate
