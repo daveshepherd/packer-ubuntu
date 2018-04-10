@@ -1,0 +1,72 @@
+{
+  "variables": {
+    "region": "",
+    "vpc_id": "",
+    "subnet_id": "",
+    "destination_regions": ""
+  },
+  "builders": [
+    {
+      "name": "ubuntu-16.04",
+      "type": "amazon-ebs",
+      "region": "{{user `region`}}",
+      "vpc_id": "{{user `vpc_id`}}",
+      "subnet_id": "{{user `subnet_id`}}",
+      "associate_public_ip_address": true,
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
+      "spot_price": "auto",
+      "spot_price_auto_product": "Linux/UNIX (Amazon VPC)",
+      "instance_type": "t2.micro",
+      "ami_regions": "{{user `destination_regions`}}",
+      "ami_groups": "all",
+      "ssh_username": "ubuntu",
+      "ami_name": "ubuntu-16.04-{{timestamp}}"
+    },
+    {
+      "name": "ubuntu-18.04",
+      "type": "amazon-ebs",
+      "region": "eu-west-1",
+      "vpc_id": "{{user `vpc_id`}}",
+      "subnet_id": "{{user `subnet_id`}}",
+      "associate_public_ip_address": true,
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images-testing/hvm-ssd/ubuntu-bionic-daily-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": [
+          "099720109477"
+        ],
+        "most_recent": true
+      },
+      "spot_price": "auto",
+      "spot_price_auto_product": "Linux/UNIX (Amazon VPC)",
+      "instance_type": "t2.micro",
+      "ami_regions": "{{user `destination_regions`}}",
+      "ami_groups": "all",
+      "ssh_username": "ubuntu",
+      "ami_name": "ubuntu-18.04-{{timestamp}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "extra_arguments": [
+        "--vault-password-file=.vault_pass.txt"
+      ],
+      "playbook_file": "ansible/master.yml"
+    }
+  ]
+}
+

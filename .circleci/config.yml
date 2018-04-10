@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Validate definition
-          command: packer validate ./ubuntu.json
+          command: packer validate ./build.json
   build:
     docker:
       - image: daveshepherd/packer-ansible
@@ -18,7 +18,7 @@ jobs:
       - attach_workspace:
           at: ~/packer
       - run:
-          name: Build ubuntu
+          name: Build AMI
           command: ./build.sh
           no_output_timeout: 30m
 workflows:
