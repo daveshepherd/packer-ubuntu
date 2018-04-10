@@ -54,7 +54,6 @@
       "spot_price_auto_product": "Linux/UNIX (Amazon VPC)",
       "instance_type": "t2.micro",
       "ami_regions": "{{user `destination_regions`}}",
-      "ami_groups": "all",
       "ssh_username": "ubuntu",
       "ami_name": "ubuntu-18.04-{{timestamp}}"
     }
