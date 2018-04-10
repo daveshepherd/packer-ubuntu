@@ -30,86 +30,87 @@ The AWS access key id and secret access key should have the following permission
 
 ```
 {
-     "Version": "2012-10-17",
-     "Statement": [
-         {
-             "Sid": "NonResourceLevelPermissions",
-             "Action": [
-                 "ec2:Describe*",
-                 "ec2:CreateVolume",
-                 "ec2:CreateKeypair",
-                 "ec2:DeleteKeypair",
-                 "ec2:CreateSecurityGroup",
-                 "ec2:AuthorizeSecurityGroupIngress",
-                 "ec2:CreateImage",
-                 "ec2:CreateSnapshot",
-                 "ec2:DeleteSnapshot",
-                 "ec2:RegisterImage",
-                 "ec2:CreateTags",
-                 "ec2:ModifyImageAttribute",
-                 "ec2:RequestSpotInstances",
-                 "ec2:CancelSpotInstanceRequests"
-             ],
-             "Effect": "Allow",
-             "Resource": "*"
-         },
-         {
-             "Sid": "AllowInstanceActions",
-             "Effect": "Allow",
-             "Action": [
-                 "ec2:StopInstances",
-                 "ec2:TerminateInstances",
-                 "ec2:AttachVolume",
-                 "ec2:DetachVolume",
-                 "ec2:DeleteVolume"
-             ],
-             "Resource": [
-                 "arn:aws:ec2:eu-west-1:123456789012:instance/*",
-                 "arn:aws:ec2:eu-west-1:123456789012:volume/*",
-                 "arn:aws:ec2:eu-west-1:123456789012:security-group/*"
-             ],
-             "Condition": {
-                 "StringEquals": {
-                     "ec2:ResourceTag/Name": "Packer Builder"
-                 }
-             }
-         },
-         {
-             "Sid": "EC2RunInstancesSubnet",
-             "Effect": "Allow",
-             "Action": [
-                 "ec2:RunInstances"
-             ],
-             "Resource": [
-                 "arn:aws:ec2:eu-west-1::image/*",
-                 "arn:aws:ec2:eu-west-1:123456789012:key-pair/*",
-                 "arn:aws:ec2:eu-west-1:123456789012:network-interface/*",
-                 "arn:aws:ec2:eu-west-1:123456789012:security-group/*",
-                 "arn:aws:ec2:eu-west-1:123456789012:volume/*",
-                 "arn:aws:ec2:eu-west-1:123456789012:instance/*",
-                 "arn:aws:ec2:eu-west-1:123456789012:subnet/subnet-efgh5678",
-                 "arn:aws:ec2:eu-west-1:123456789012:vpc/vpc-*"
-             ]
-         },
-         {
-             "Sid": "SGVPCDelete",
-             "Effect": "Allow",
-             "Action": [
-                 "ec2:DeleteSecurityGroup"
-             ],
-             "Resource": [
-                 "*"
-             ],
-             "Condition": {
-                 "StringEquals": {
-                     "ec2:vpc": [
-                         "arn:aws:ec2:eu-west-1:123456789012:vpc/vpc-abcd1234"
-                     ]
-                 }
-             }
-         }
-     ]
- }
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "NonResourceLevelPermissions",
+            "Action": [
+                "ec2:Describe*",
+                "ec2:CreateVolume",
+                "ec2:CreateKeypair",
+                "ec2:DeleteKeypair",
+                "ec2:CreateSecurityGroup",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:CreateImage",
+                "ec2:CopyImage",
+                "ec2:CreateSnapshot",
+                "ec2:DeleteSnapshot",
+                "ec2:RegisterImage",
+                "ec2:CreateTags",
+                "ec2:ModifyImageAttribute",
+                "ec2:RequestSpotInstances",
+                "ec2:CancelSpotInstanceRequests"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Sid": "AllowInstanceActions",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:StopInstances",
+                "ec2:TerminateInstances",
+                "ec2:AttachVolume",
+                "ec2:DetachVolume",
+                "ec2:DeleteVolume"
+            ],
+            "Resource": [
+                "arn:aws:ec2:eu-west-1:123456789012:instance/*",
+                "arn:aws:ec2:eu-west-1:123456789012:volume/*",
+                "arn:aws:ec2:eu-west-1:123456789012:security-group/*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "ec2:ResourceTag/Name": "Packer Builder"
+                }
+            }
+        },
+        {
+            "Sid": "EC2RunInstancesSubnet",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:RunInstances"
+            ],
+            "Resource": [
+                "arn:aws:ec2:eu-west-1::image/*",
+                "arn:aws:ec2:eu-west-1:123456789012:key-pair/*",
+                "arn:aws:ec2:eu-west-1:123456789012:network-interface/*",
+                "arn:aws:ec2:eu-west-1:123456789012:security-group/*",
+                "arn:aws:ec2:eu-west-1:123456789012:volume/*",
+                "arn:aws:ec2:eu-west-1:123456789012:instance/*",
+                "arn:aws:ec2:eu-west-1:123456789012:subnet/subnet-efgh5678",
+                "arn:aws:ec2:eu-west-1:123456789012:vpc/vpc-*"
+            ]
+        },
+        {
+            "Sid": "SGVPCDelete",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DeleteSecurityGroup"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "ec2:vpc": [
+                        "arn:aws:ec2:eu-west-1:123456789012:vpc/vpc-abcd1234"
+                    ]
+                }
+            }
+        }
+    ]
+}
 ```
 
 ## Ansible encrypted value
