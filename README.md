@@ -19,10 +19,9 @@ The following environment variables are required to build this image
 
 * AWS_ACCESS_KEY_ID
 * AWS_SECRET_ACCESS_KEY	
-* IRELAND_VPC - The ID of a VPC to use in Ireland (eu-west-1), e.g. vpc-abcd1234
-* IRELAND_SUBNET - The ID of the subnet to use in Ireland (eu-west-1), e.g. subnet-efgh5678
-* LONDON_VPC - The ID of a VPC to use in London (eu-west-1), e.g. vpc-12345abcd
-* ANSIBLE_VAULT_PASSWORD - The password used to encrypt the secrets in the ansible configuration
+* VPC_ID - The ID of a VPC to use for the build, e.g. vpc-abcd1234
+* SUBNET_ID - The ID of the subnet to use for the build, e.g. subnet-efgh5678
+* DESTINATION_REGIONS - A list of regions to replicate this AMI to, e.g. eu-west-2,us-west-1
 
 ## AWS IAM policy
 
