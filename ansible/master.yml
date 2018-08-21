@@ -4,7 +4,7 @@
   pre_tasks:
     - name: Install python for Ansible
       become: true
-      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      raw: test -e /usr/bin/python3 || (apt-get -y update && apt-get install -y python3-minimal)
       changed_when: false
     - setup: # aka gather_facts
 

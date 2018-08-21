@@ -61,6 +61,8 @@
     {
       "type": "ansible",
       "extra_arguments": [
+        "--extra-vars",
+        "ansible_python_interpreter=/usr/bin/python3",
         "--vault-password-file=.vault_pass.txt"
       ],
       "playbook_file": "ansible/master.yml"
